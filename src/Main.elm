@@ -1,6 +1,7 @@
 module Main exposing (main)
 
 import Browser
+import Dict exposing (Dict)
 import Html exposing (Html, button, div, h1, p, text)
 import Html.Events exposing (onClick)
 import Url
@@ -34,7 +35,21 @@ type alias Article =
 
 view : Maybe String -> Browser.Document msg
 view maybeArticlePath =
-    articleNotFoundDocument
+    maybeArticlePath
+        |> Maybe.andThen lookupArticle
+        |> Maybe.map articleDocument
+        |> Maybe.withDefault articleNotFoundDocument
+
+
+lookupArticle : String -> Maybe Article
+lookupArticle articlePath =
+    articles
+        |> Dict.get articlePath
+
+
+articles : Dict String Article
+articles =
+    Dict.fromList [ ( "hello", { title = "Hello!", body = "Here's a nice article for you! 🎉" } ) ]
 
 
 articleDocument : Article -> Browser.Document msg
