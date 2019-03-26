@@ -17,28 +17,25 @@ type alias Model =
 
 
 type Msg
-    = OnUrlRequest Browser.UrlRequest
-    | OnUrlChange Url.Url
+    = NoOp
 
 
-init () url navigationKey =
+init () =
     ( [], Cmd.none )
 
 
 view : Model -> Browser.Document msg
 view model =
-    { title = "Todo"
+    { title = "Your Event"
     , body = []
     }
 
 
 main : Program () Model Msg
 main =
-    Browser.application
+    Browser.document
         { init = init
         , view = view
         , update = \msg model -> ( model, Cmd.none )
         , subscriptions = \model -> Sub.none
-        , onUrlRequest = OnUrlRequest
-        , onUrlChange = OnUrlChange
         }
