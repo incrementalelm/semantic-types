@@ -3,6 +3,7 @@ module Main exposing (main)
 import Browser
 import Dict exposing (Dict)
 import Element exposing (Element)
+import Element.Font
 import Html exposing (Html, button, div, h1, p, text)
 import Html.Events exposing (onClick)
 import Url
@@ -31,10 +32,28 @@ view model =
     }
 
 
+attendeesView attendees =
+    List.map attendeeView attendees
+        |> Element.column [ Element.spacing 20, Element.Font.size 16 ]
+
+
+attendeeView attendee =
+    Element.text attendee.first
+
+
+parsedAttendees =
+    [ { first = "Dillon" }
+    ]
+
+
 mainView : Model -> Element msg
 mainView model =
-    Element.text "Attendees"
-        |> Element.el [ Element.centerX ]
+    Element.column
+        [ Element.spacing 30, Element.centerX ]
+        [ Element.text "Attendees"
+            |> Element.el []
+        , attendeesView parsedAttendees
+        ]
 
 
 main : Program () Model Msg
