@@ -46,6 +46,18 @@ parsedAttendees =
     ]
 
 
+attendeesJson : String
+attendeesJson =
+    """
+  [
+    {"first": "James", "last": "Kirk"},
+    {"first": "Leonard", "last": "McCoy"},
+    {"first": "Spock"},
+    {"first": "Nyota", "last": "Uhura"}
+  ]
+  """
+
+
 mainView : Model -> Element msg
 mainView model =
     Element.column
