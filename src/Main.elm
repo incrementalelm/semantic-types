@@ -38,11 +38,20 @@ attendeesView attendees =
 
 
 attendeeView attendee =
-    Element.text attendee.first
+    Element.row []
+        [ (case attendee.last of
+            Just last ->
+                attendee.first ++ " " ++ last
+
+            Nothing ->
+                attendee.first
+          )
+            |> Element.text
+        ]
 
 
 parsedAttendees =
-    [ { first = "Dillon" }
+    [ { first = "Dillon", last = Just "Kearns" }
     ]
 
 
