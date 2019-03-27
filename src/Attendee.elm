@@ -1,4 +1,4 @@
-module Attendee exposing (Attendee)
+module Attendee exposing (Attendee, decoder)
 
 import Json.Decode as Decode exposing (Decoder)
 

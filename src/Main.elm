@@ -1,11 +1,13 @@
 module Main exposing (main)
 
+import Attendee
 import Browser
 import Dict exposing (Dict)
 import Element exposing (Element)
 import Element.Font
 import Html exposing (Html, button, div, h1, p, text)
 import Html.Events exposing (onClick)
+import Json.Decode
 import Url
 
 
@@ -32,9 +34,17 @@ view model =
     }
 
 
-attendeesView attendees =
-    List.map attendeeView attendees
-        |> Element.column [ Element.spacing 20, Element.Font.size 16 ]
+attendeesView attendeesResult =
+    case attendeesResult of
+        Ok attendees ->
+            List.map attendeeView attendees
+                |> Element.column [ Element.spacing 20, Element.Font.size 16 ]
+
+        Err error ->
+            error
+                |> Json.Decode.errorToString
+                |> Element.text
+                |> Element.el []
 
 
 attendeeView attendee =
@@ -51,8 +61,7 @@ attendeeView attendee =
 
 
 parsedAttendees =
-    [ { first = "Dillon", last = Just "Kearns" }
-    ]
+    Ok [ { first = "Dillon", last = Just "Kearns" } ]
 
 
 attendeesJson : String
