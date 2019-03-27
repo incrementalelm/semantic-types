@@ -16,15 +16,16 @@ type Todo
 
 
 type alias Model =
-    List Todo
+    ()
 
 
 type Msg
     = NoOp
 
 
+init : () -> ( (), Cmd msg )
 init () =
-    ( [], Cmd.none )
+    ( (), Cmd.none )
 
 
 view : Model -> Browser.Document msg
@@ -34,6 +35,9 @@ view model =
     }
 
 
+attendeesView :
+    Result Json.Decode.Error (List { a | first : String, last : Maybe String })
+    -> Element msg
 attendeesView attendeesResult =
     case attendeesResult of
         Ok attendees ->
@@ -47,6 +51,7 @@ attendeesView attendeesResult =
                 |> Element.el []
 
 
+attendeeView : { a | first : String, last : Maybe String } -> Element msg
 attendeeView attendee =
     Element.row []
         [ (case attendee.last of
@@ -60,6 +65,7 @@ attendeeView attendee =
         ]
 
 
+parsedAttendees : Result error (List { first : String, last : Maybe String })
 parsedAttendees =
     Ok [ { first = "Dillon", last = Just "Kearns" } ]
 
