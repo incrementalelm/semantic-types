@@ -67,7 +67,10 @@ attendeeView attendee =
 
 parsedAttendees : Result error (List { first : String, last : Maybe String })
 parsedAttendees =
-    Ok [ { first = "Dillon", last = Just "Kearns" } ]
+    Ok
+        [ { first = "James", last = Just "Kirk" }
+        , { first = "Spock", last = Nothing }
+        ]
 
 
 attendeesJson : String
