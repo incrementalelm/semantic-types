@@ -65,7 +65,7 @@ attendeeView attendee =
         ]
 
 
-parsedAttendees : Result error (List { first : String, last : Maybe String })
+parsedAttendees : Result Json.Decode.Error (List { first : String, last : Maybe String })
 parsedAttendees =
     Ok
         [ { first = "James", last = Just "Kirk" }
