@@ -40,8 +40,8 @@ mainView : Model -> Element Msg
 mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
-        [ Element.text "Unescape" |> Element.el []
-        , toEncode model.inputValue
+        [ toEncode model.inputValue
+        , toDecode model.inputValue
         ]
 
 
@@ -50,7 +50,16 @@ toEncode inputValue =
         { onChange = OnInput
         , text = inputValue
         , placeholder = Nothing
-        , label = Element.Input.labelHidden ""
+        , label = Element.Input.labelAbove [] (Element.text "Raw Value")
+        }
+
+
+toDecode rawValue =
+    Element.Input.text [ Element.width Element.fill ]
+        { onChange = \_ -> NoOp
+        , text = rawValue
+        , placeholder = Nothing
+        , label = Element.Input.labelAbove [] (Element.text "Encoded URL")
         }
 
 
