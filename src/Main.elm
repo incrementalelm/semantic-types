@@ -43,10 +43,15 @@ mainView model =
         [ toEncode model.inputValue
         , toDecode model.inputValue
         , Element.newTabLink []
-            { url = "https://google.com/" ++ model.inputValue
+            { url = googleLink (Url.percentEncode model.inputValue)
             , label = Element.text ("Search Google for \"" ++ model.inputValue ++ "\"")
             }
         ]
+
+
+googleLink : String -> String
+googleLink inputValue =
+    "https://google.com/" ++ Url.percentEncode inputValue
 
 
 toEncode inputValue =
