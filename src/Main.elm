@@ -54,6 +54,7 @@ googleLink inputValue =
     "https://google.com/" ++ Url.percentEncode inputValue
 
 
+toEncode : String -> Element Msg
 toEncode inputValue =
     Element.Input.text [ Element.width Element.fill ]
         { onChange = OnInput
@@ -63,6 +64,7 @@ toEncode inputValue =
         }
 
 
+toDecode : String -> Element Msg
 toDecode rawValue =
     Element.Input.text [ Element.width Element.fill ]
         { onChange = \_ -> NoOp
@@ -82,6 +84,7 @@ main =
         }
 
 
+update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
     case msg of
         NoOp ->
