@@ -8,6 +8,7 @@ import Element.Input
 import Html exposing (Html, button, div, h1, p, text)
 import Html.Events exposing (onClick)
 import Json.Decode
+import RawSearch exposing (RawSearch)
 import Url
 
 
@@ -16,17 +17,17 @@ type alias Flags =
 
 
 type alias Model =
-    { inputValue : String }
+    { inputValue : RawSearch }
 
 
 type Msg
     = NoOp
-    | OnInput String
+    | OnInput RawSearch
 
 
 init : () -> ( Model, Cmd msg )
 init () =
-    ( { inputValue = "" }, Cmd.none )
+    ( { inputValue = RawSearch.empty }, Cmd.none )
 
 
 view : Model -> Browser.Document Msg
@@ -43,32 +44,35 @@ mainView model =
         [ toEncode model.inputValue
         , toDecode model.inputValue
         , Element.newTabLink []
-            { url = googleLink (Url.percentEncode model.inputValue)
-            , label = Element.text ("Search Google for \"" ++ model.inputValue ++ "\"")
+            { url = googleLink model.inputValue
+            , label =
+                Element.text
+                    ("Search Google for \""
+                        ++ RawSearch.unencoded model.inputValue
+                        ++ "\""
+                    )
             }
         ]
 
 
-googleLink : String -> String
+googleLink : RawSearch -> String
 googleLink inputValue =
-    "https://google.com/" ++ Url.percentEncode inputValue
+    "https://google.com/search?q=" ++ RawSearch.encoded inputValue
 
 
-toEncode : String -> Element Msg
+toEncode : RawSearch -> Element Msg
 toEncode inputValue =
-    Element.Input.text [ Element.width Element.fill ]
-        { onChange = OnInput
-        , text = inputValue
-        , placeholder = Nothing
-        , label = Element.Input.labelAbove [] (Element.text "Raw text (Not Encoded)")
-        }
+    RawSearch.input [ Element.width Element.fill ]
+        (Element.Input.labelAbove [] (Element.text "Raw text (Not Encoded)"))
+        inputValue
+        OnInput
 
 
-toDecode : String -> Element Msg
+toDecode : RawSearch -> Element Msg
 toDecode rawValue =
     Element.Input.text [ Element.width Element.fill ]
         { onChange = \_ -> NoOp
-        , text = Url.percentEncode rawValue
+        , text = RawSearch.encoded rawValue
         , placeholder = Nothing
         , label = Element.Input.labelAbove [] (Element.text "Valid URL (Encoded)")
         }
