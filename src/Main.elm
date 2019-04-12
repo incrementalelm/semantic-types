@@ -41,11 +41,11 @@ mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
         [ Element.text "Unescape" |> Element.el []
-        , thing model.inputValue
+        , toEncode model.inputValue
         ]
 
 
-thing inputValue =
+toEncode inputValue =
     Element.Input.text [ Element.width Element.fill ]
         { onChange = OnInput
         , text = inputValue
