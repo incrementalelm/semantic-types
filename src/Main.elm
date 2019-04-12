@@ -50,7 +50,7 @@ toEncode inputValue =
         { onChange = OnInput
         , text = inputValue
         , placeholder = Nothing
-        , label = Element.Input.labelAbove [] (Element.text "Raw Value")
+        , label = Element.Input.labelAbove [] (Element.text "Raw text (Not Encoded)")
         }
 
 
@@ -59,7 +59,7 @@ toDecode rawValue =
         { onChange = \_ -> NoOp
         , text = rawValue
         , placeholder = Nothing
-        , label = Element.Input.labelAbove [] (Element.text "Encoded URL")
+        , label = Element.Input.labelAbove [] (Element.text "Valid URL (Encoded)")
         }
 
 
