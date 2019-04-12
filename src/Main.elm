@@ -42,6 +42,10 @@ mainView model =
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
         [ toEncode model.inputValue
         , toDecode model.inputValue
+        , Element.newTabLink []
+            { url = "https://google.com/" ++ model.inputValue
+            , label = Element.text ("Search Google for \"" ++ model.inputValue ++ "\"")
+            }
         ]
 
 
