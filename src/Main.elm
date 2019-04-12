@@ -57,7 +57,7 @@ toEncode inputValue =
 toDecode rawValue =
     Element.Input.text [ Element.width Element.fill ]
         { onChange = \_ -> NoOp
-        , text = rawValue
+        , text = Url.percentEncode rawValue
         , placeholder = Nothing
         , label = Element.Input.labelAbove [] (Element.text "Valid URL (Encoded)")
         }
