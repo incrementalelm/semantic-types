@@ -16,16 +16,17 @@ type alias Flags =
 
 
 type alias Model =
-    ()
+    { inputValue : String }
 
 
 type Msg
     = NoOp
+    | OnInput String
 
 
-init : () -> ( (), Cmd msg )
+init : () -> ( Model, Cmd msg )
 init () =
-    ( (), Cmd.none )
+    ( { inputValue = "" }, Cmd.none )
 
 
 view : Model -> Browser.Document Msg
@@ -40,14 +41,14 @@ mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
         [ Element.text "Unescape" |> Element.el []
-        , thing
+        , thing model.inputValue
         ]
 
 
-thing =
+thing inputValue =
     Element.Input.text [ Element.width Element.fill ]
-        { onChange = \_ -> NoOp
-        , text = "Hello!"
+        { onChange = OnInput
+        , text = inputValue
         , placeholder = Nothing
         , label = Element.Input.labelHidden ""
         }
@@ -58,6 +59,15 @@ main =
     Browser.document
         { init = init
         , view = view
-        , update = \msg model -> ( model, Cmd.none )
+        , update = update
         , subscriptions = \model -> Sub.none
         }
+
+
+update msg model =
+    case msg of
+        NoOp ->
+            ( model, Cmd.none )
+
+        OnInput newInput ->
+            ( { model | inputValue = newInput }, Cmd.none )
