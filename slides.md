@@ -38,3 +38,13 @@ googleLink rawValue =
 
 1. Create new module
 1. Create opaque type
+
+# Why Not Just "Fix It"?
+
+- Could go in and read the code and find the problem.
+- Ordering of things I trust
+  - Comments
+  - Parameter names
+  - Types
+  - Gatekeeper types
+- I don't want to fix it once. I want to prevent it from happening again.
