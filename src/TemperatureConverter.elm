@@ -14,18 +14,23 @@ type alias Flags =
     ()
 
 
+type TemperatureInput
+    = InputF String
+    | InputC String
+
+
 type alias Model =
-    { temperature : String }
+    { temperature : TemperatureInput }
 
 
 type Msg
     = NoOp
-    | OnInput String
+    | OnInput TemperatureInput
 
 
 init : () -> ( Model, Cmd msg )
 init () =
-    ( { temperature = "" }, Cmd.none )
+    ( { temperature = InputC "0" }, Cmd.none )
 
 
 view : Model -> Browser.Document Msg
@@ -44,10 +49,19 @@ mainView model =
         ]
 
 
-temperatureInputView temperature =
+temperatureInputView tempInput =
+    let
+        inputValue =
+            case tempInput of
+                InputF inputF ->
+                    inputF
+
+                InputC inputC ->
+                    inputC
+    in
     Element.Input.text []
-        { onChange = OnInput
-        , text = temperature
+        { onChange = \input -> input |> InputC |> OnInput
+        , text = inputValue
         , placeholder = Nothing
         , label = Element.Input.labelAbove [] (Element.text "Degrees C")
         }
@@ -57,15 +71,23 @@ cToF celsius =
     celsius * (9 / 5) + 32
 
 
-temperatureInputViewF temperatureC =
+temperatureInputViewF tempInput =
+    let
+        inputValue =
+            case tempInput of
+                InputF inputF ->
+                    inputF
+
+                InputC inputC ->
+                    inputC
+                        |> String.toFloat
+                        |> Maybe.map cToF
+                        |> Maybe.map String.fromFloat
+                        |> Maybe.withDefault ""
+    in
     Element.Input.text []
-        { onChange = OnInput
-        , text =
-            temperatureC
-                |> String.toFloat
-                |> Maybe.map cToF
-                |> Maybe.map String.fromFloat
-                |> Maybe.withDefault ""
+        { onChange = \input -> input |> InputF |> OnInput
+        , text = inputValue
         , placeholder = Nothing
         , label = Element.Input.labelAbove [] (Element.text "Degrees F")
         }
