@@ -48,3 +48,14 @@ googleLink rawValue =
   - Types
   - Gatekeeper types
 - I don't want to fix it once. I want to prevent it from happening again.
+
+# Why do you trust semantic types more than variable names?
+
+- Levels of trust
+  - Comment
+  - Variable name
+  - Function name (to convert from type)
+  - Type
+- Why?
+  - How much support does the compiler give me?
+  - How likely am I to change it when the meaning changes?
