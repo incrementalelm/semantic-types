@@ -39,11 +39,21 @@ mainView : Model -> Element Msg
 mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
-        [ model.temperature
+        [ temperatureInputView model.temperature
+        , model.temperature
             |> Maybe.withDefault 0
             |> String.fromFloat
             |> Element.text
         ]
+
+
+temperatureInputView temperature =
+    Element.Input.text []
+        { onChange = OnInput
+        , text = temperature |> Maybe.map String.fromFloat |> Maybe.withDefault "0"
+        , placeholder = Nothing
+        , label = Element.Input.labelAbove [] (Element.text "Degrees C")
+        }
 
 
 main : Program Flags Model Msg
@@ -63,4 +73,4 @@ update msg model =
             ( model, Cmd.none )
 
         OnInput newInput ->
-            ( { model | temperature = Nothing }, Cmd.none )
+            ( { model | temperature = newInput |> String.toFloat }, Cmd.none )
