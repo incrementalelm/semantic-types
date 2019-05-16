@@ -59,3 +59,11 @@ googleLink rawValue =
 - Why?
   - How much support does the compiler give me?
   - How likely am I to change it when the meaning changes?
+
+# Functions vs. Types
+
+- Functions
+- Remember to unwrap late
+- Types
+  - Functions can enforce unwrapping late by expecting a type
+  - Also provides reliable documentation (changes when needed)
