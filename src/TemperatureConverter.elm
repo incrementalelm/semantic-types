@@ -35,7 +35,7 @@ init () =
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = "Escaper/Unescaper"
+    { title = "Temperature Converter"
     , body = [ mainView model |> Element.layout [ Element.padding 30 ] ]
     }
 
