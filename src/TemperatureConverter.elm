@@ -45,19 +45,23 @@ mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
         [ Element.row [ Element.width Element.fill, Element.spacing 15 ]
-            [ temperatureInputView model.temperature
+            [ temperatureInputViewC model.temperature
             , Element.el [] (Element.text "=")
             , temperatureInputViewF model.temperature
             ]
         ]
 
 
-temperatureInputView tempInput =
+temperatureInputViewC tempInput =
     let
         inputValue =
             case tempInput of
                 InputF inputF ->
                     inputF
+                        |> String.toFloat
+                        |> Maybe.map fToC
+                        |> Maybe.map String.fromFloat
+                        |> Maybe.withDefault ""
 
                 InputC inputC ->
                     inputC
@@ -72,6 +76,10 @@ temperatureInputView tempInput =
 
 cToF celsius =
     celsius * (9 / 5) + 32
+
+
+fToC fahrenheit =
+    (fahrenheit - 32) * (5 / 9)
 
 
 temperatureInputViewF tempInput =
