@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "elm-live src/Main.elm --open --pushstate",
-    "start-temperature": "parcel temperature.html"
+    "start-temperature": "parcel temperature.html",
+    "start-timer": "parcel timer.html"
   },
   "keywords": [],
   "author": "",
