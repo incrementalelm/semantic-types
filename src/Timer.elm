@@ -36,7 +36,22 @@ mainView : Model -> Element Msg
 mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
-        []
+        [ Element.text "Time until New Year's"
+        , timerView model.now
+        ]
+
+
+timerView : Time.Posix -> Element msg
+timerView now =
+    now
+        |> millisUntilNewYears
+        |> String.fromInt
+        |> Element.text
+
+
+millisUntilNewYears : Time.Posix -> Int
+millisUntilNewYears now =
+    1577865600000 - Time.toMillis Time.utc now
 
 
 main : Program Flags Model Msg
