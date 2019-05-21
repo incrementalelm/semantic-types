@@ -45,6 +45,8 @@ timerView : Time.Posix -> Element msg
 timerView now =
     now
         |> millisUntilNewYears
+        |> (\millis -> toFloat millis / (1000 * 60 * 60 * 24))
+        |> round
         |> String.fromInt
         |> Element.text
 
