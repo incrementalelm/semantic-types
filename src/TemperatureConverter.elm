@@ -44,8 +44,11 @@ mainView : Model -> Element Msg
 mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
-        [ temperatureInputView model.temperature
-        , temperatureInputViewF model.temperature
+        [ Element.row [ Element.width Element.fill, Element.spacing 15 ]
+            [ temperatureInputView model.temperature
+            , Element.el [] (Element.text "=")
+            , temperatureInputViewF model.temperature
+            ]
         ]
 
 
