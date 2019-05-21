@@ -51,7 +51,12 @@ timerView now =
 
 millisUntilNewYears : Time.Posix -> Int
 millisUntilNewYears now =
-    1577865600000 - Time.toMillis Time.utc now
+    newYears2020 - Time.toMillis Time.utc now
+
+
+newYears2020 : Int
+newYears2020 =
+    1577865600000
 
 
 main : Program Flags Model Msg
