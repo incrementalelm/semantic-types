@@ -19,6 +19,7 @@ type alias Model =
 
 type Msg
     = NoOp
+    | ChangedSsnInput String
 
 
 init : () -> ( Model, Cmd msg )
@@ -37,7 +38,13 @@ mainView : Model -> Element Msg
 mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
-        []
+        [ Element.Input.text []
+            { onChange = ChangedSsnInput
+            , text = model.ssnInput
+            , placeholder = Nothing
+            , label = Element.Input.labelAbove [] (Element.text "SSN")
+            }
+        ]
 
 
 main : Program Flags Model Msg
@@ -59,3 +66,6 @@ update msg model =
     case msg of
         NoOp ->
             ( model, Cmd.none )
+
+        ChangedSsnInput changedSsn ->
+            ( { model | ssnInput = changedSsn }, Cmd.none )
