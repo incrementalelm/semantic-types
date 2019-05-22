@@ -3,6 +3,7 @@ module Social exposing (main)
 import Browser
 import Duration
 import Element exposing (Element)
+import Element.Events
 import Element.Font
 import Element.Input
 import Millis exposing (Millis(..), millis)
@@ -14,17 +15,24 @@ type alias Flags =
 
 
 type alias Model =
-    { ssnInput : String }
+    { ssnInput : String
+    , ssnFocus : FocusState
+    }
 
 
 type Msg
     = NoOp
     | ChangedSsnInput String
+    | SsnFocusChanged FocusState
 
 
 init : () -> ( Model, Cmd msg )
 init () =
-    ( { ssnInput = "" }, Cmd.none )
+    ( { ssnInput = ""
+      , ssnFocus = OutOfFocus
+      }
+    , Cmd.none
+    )
 
 
 view : Model -> Browser.Document Msg
@@ -34,17 +42,37 @@ view model =
     }
 
 
+type FocusState
+    = InFocus
+    | OutOfFocus
+
+
 mainView : Model -> Element Msg
 mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
-        [ Element.Input.text []
+        [ Element.Input.text
+            [ Element.Events.onFocus (SsnFocusChanged InFocus)
+            , Element.Events.onLoseFocus (SsnFocusChanged OutOfFocus)
+            ]
             { onChange = ChangedSsnInput
-            , text = model.ssnInput
+            , text =
+                case model.ssnFocus of
+                    InFocus ->
+                        model.ssnInput
+
+                    OutOfFocus ->
+                        model.ssnInput |> maskSsn
             , placeholder = Nothing
             , label = Element.Input.labelAbove [] (Element.text "SSN")
             }
         ]
+
+
+maskSsn : String -> String
+maskSsn ssn =
+    ssn
+        |> String.replace "0" "X"
 
 
 main : Program Flags Model Msg
@@ -69,3 +97,6 @@ update msg model =
 
         ChangedSsnInput changedSsn ->
             ( { model | ssnInput = changedSsn }, Cmd.none )
+
+        SsnFocusChanged focusState ->
+            ( { model | ssnFocus = focusState }, Cmd.none )
