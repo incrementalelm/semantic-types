@@ -1,9 +1,11 @@
 module Timer exposing (main)
 
 import Browser
+import Duration
 import Element exposing (Element)
 import Element.Font
 import Element.Input
+import Millis exposing (Millis(..), millis)
 import Time
 
 
@@ -45,20 +47,21 @@ timerView : Time.Posix -> Element msg
 timerView now =
     now
         |> millisUntilNewYears
-        |> (\millis -> toFloat millis / (1000 * 60 * 60 * 24))
-        |> round
-        |> String.fromInt
+        |> Duration.inDays
+        |> String.fromFloat
         |> Element.text
 
 
-millisUntilNewYears : Time.Posix -> Int
+millisUntilNewYears : Time.Posix -> Duration.Duration
 millisUntilNewYears now =
-    newYears2020 - Time.toMillis Time.utc now
+    Duration.from
+        now
+        newYears2020
 
 
-newYears2020 : Int
+newYears2020 : Time.Posix
 newYears2020 =
-    1577865600000
+    Time.millisToPosix 1577865600000
 
 
 main : Program Flags Model Msg
