@@ -3,6 +3,7 @@ module Social exposing (main)
 import Browser
 import Duration
 import Element exposing (Element)
+import Element.Border
 import Element.Events
 import Element.Font
 import Element.Input
@@ -24,6 +25,7 @@ type Msg
     = NoOp
     | ChangedSsnInput String
     | SsnFocusChanged FocusState
+    | SubmitSsn
 
 
 init : () -> ( Model, Cmd msg )
@@ -51,22 +53,33 @@ mainView : Model -> Element Msg
 mainView model =
     Element.column
         [ Element.spacing 30, Element.centerX, Element.width Element.fill ]
-        [ Element.Input.text
-            [ Element.Events.onFocus (SsnFocusChanged InFocus)
-            , Element.Events.onLoseFocus (SsnFocusChanged OutOfFocus)
+        [ ssnInput model
+        , Element.el
+            [ Element.Border.width 2
+            , Element.padding 10
+            , Element.pointer
+            , Element.Events.onClick SubmitSsn
             ]
-            { onChange = ChangedSsnInput
-            , text =
-                case model.ssnFocus of
-                    InFocus ->
-                        model.ssnInput
-
-                    OutOfFocus ->
-                        model.ssnInput |> maskSsn
-            , placeholder = Nothing
-            , label = Element.Input.labelAbove [] (Element.text "SSN")
-            }
+            (Element.text "Submit")
         ]
+
+
+ssnInput model =
+    Element.Input.text
+        [ Element.Events.onFocus (SsnFocusChanged InFocus)
+        , Element.Events.onLoseFocus (SsnFocusChanged OutOfFocus)
+        ]
+        { onChange = ChangedSsnInput
+        , text =
+            case model.ssnFocus of
+                InFocus ->
+                    model.ssnInput
+
+                OutOfFocus ->
+                    model.ssnInput |> maskSsn
+        , placeholder = Nothing
+        , label = Element.Input.labelAbove [] (Element.text "SSN")
+        }
 
 
 maskSsn : String -> String
@@ -109,3 +122,10 @@ update msg model =
 
         SsnFocusChanged focusState ->
             ( { model | ssnFocus = focusState }, Cmd.none )
+
+        SubmitSsn ->
+            let
+                _ =
+                    Debug.log "Uploading ssn" model.ssnInput
+            in
+            ( model, Cmd.none )
