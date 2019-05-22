@@ -6,6 +6,7 @@
   "scripts": {
     "start": "elm-live src/Main.elm --open --pushstate",
     "start-temperature": "parcel temperature.html",
+    "start-social": "parcel social.html",
     "start-timer": "parcel timer.html"
   },
   "keywords": [],
