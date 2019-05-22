@@ -73,6 +73,15 @@ maskSsn : String -> String
 maskSsn ssn =
     ssn
         |> String.replace "0" "X"
+        |> String.replace "1" "X"
+        |> String.replace "2" "X"
+        |> String.replace "3" "X"
+        |> String.replace "4" "X"
+        |> String.replace "5" "X"
+        |> String.replace "6" "X"
+        |> String.replace "7" "X"
+        |> String.replace "8" "X"
+        |> String.replace "9" "X"
 
 
 main : Program Flags Model Msg
