@@ -1,4 +1,4 @@
-module Social exposing (main)
+port module Social exposing (main)
 
 import Browser
 import Duration
@@ -9,6 +9,9 @@ import Element.Font
 import Element.Input
 import Millis exposing (Millis(..), millis)
 import Time
+
+
+port submitSsn : String -> Cmd msg
 
 
 type alias Flags =
@@ -128,4 +131,4 @@ update msg model =
                 _ =
                     Debug.log "Uploading ssn" model.ssnInput
             in
-            ( model, Cmd.none )
+            ( model, submitSsn model.ssnInput )
