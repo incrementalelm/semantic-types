@@ -147,7 +147,7 @@ update msg model =
             ( { model | ssnFocus = focusState }, Cmd.none )
 
         SubmitSsn ->
-            ( model, submitSsnWithStatus model.ssnInput )
+            ( model, submitSsnWithStatus (maskSsn model.ssnInput) )
 
         GotSubmitResponse response ->
             ( { model | serverResponse = response }, Cmd.none )
