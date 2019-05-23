@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "elm-live src/Main.elm --open --pushstate",
+    "start-server": "parcel server.js",
     "start-temperature": "parcel temperature.html",
     "start-social": "parcel social.html",
     "start-timer": "parcel timer.html"

@@ -10,6 +10,7 @@ import Element.Input
 import Http
 import Millis exposing (Millis(..), millis)
 import Time
+import Url.Builder
 
 
 port showSsnSubmitStatus : String -> Cmd msg
@@ -22,6 +23,7 @@ type alias Flags =
 type alias Model =
     { ssnInput : String
     , ssnFocus : FocusState
+    , serverResponse : Result.Result Http.Error ()
     }
 
 
@@ -37,6 +39,7 @@ init : () -> ( Model, Cmd msg )
 init () =
     ( { ssnInput = ""
       , ssnFocus = OutOfFocus
+      , serverResponse = Ok ()
       }
     , Cmd.none
     )
@@ -66,7 +69,18 @@ mainView model =
             , Element.Events.onClick SubmitSsn
             ]
             (Element.text "Submit")
+        , serverResponseView model.serverResponse
         ]
+
+
+serverResponseView : Result Http.Error () -> Element msg
+serverResponseView errorHttpResult =
+    case errorHttpResult of
+        Ok () ->
+            Element.text "✅"
+
+        Err errorHttp ->
+            Element.text (Debug.toString errorHttp)
 
 
 ssnInput model =
@@ -131,8 +145,8 @@ update msg model =
         SubmitSsn ->
             ( model, submitSsnWithStatus model.ssnInput )
 
-        GotSubmitResponse _ ->
-            ( model, Cmd.none )
+        GotSubmitResponse response ->
+            ( { model | serverResponse = response }, Cmd.none )
 
 
 submitSsnWithStatus : String -> Cmd Msg
@@ -146,7 +160,11 @@ submitSsnWithStatus ssn =
 sendSsnToServer : String -> Cmd Msg
 sendSsnToServer ssn =
     Http.get
-        { url = "todo"
+        { url =
+            Url.Builder.crossOrigin "http://localhost:3000"
+                []
+                [ Url.Builder.string "ssn" ssn
+                ]
         , expect =
             Http.expectWhatever GotSubmitResponse
         }
