@@ -7,11 +7,12 @@ import Element.Border
 import Element.Events
 import Element.Font
 import Element.Input
+import Http
 import Millis exposing (Millis(..), millis)
 import Time
 
 
-port submitSsn : String -> Cmd msg
+port showSsnSubmitStatus : String -> Cmd msg
 
 
 type alias Flags =
@@ -29,6 +30,7 @@ type Msg
     | ChangedSsnInput String
     | SsnFocusChanged FocusState
     | SubmitSsn
+    | GotSubmitResponse (Result.Result Http.Error ())
 
 
 init : () -> ( Model, Cmd msg )
@@ -114,7 +116,7 @@ subscriptions model =
     Sub.none
 
 
-update : Msg -> Model -> ( Model, Cmd msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
@@ -127,13 +129,24 @@ update msg model =
             ( { model | ssnFocus = focusState }, Cmd.none )
 
         SubmitSsn ->
-            let
-                _ =
-                    Debug.log "Uploading ssn" model.ssnInput
-            in
             ( model, submitSsnWithStatus model.ssnInput )
 
+        GotSubmitResponse _ ->
+            ( model, Cmd.none )
 
-submitSsnWithStatus : String -> Cmd msg
+
+submitSsnWithStatus : String -> Cmd Msg
 submitSsnWithStatus ssn =
-    submitSsn ssn
+    Cmd.batch
+        [ showSsnSubmitStatus ssn
+        , sendSsnToServer ssn
+        ]
+
+
+sendSsnToServer : String -> Cmd Msg
+sendSsnToServer ssn =
+    Http.get
+        { url = "todo"
+        , expect =
+            Http.expectWhatever GotSubmitResponse
+        }
