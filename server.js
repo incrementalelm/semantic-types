@@ -6,14 +6,13 @@ server.on("request", (request, response) => {
   const ssn = url.parse(request.url, true).query.ssn;
   const ssnWithoutDashes = ssn.replace(new RegExp(/-/, "g"), "");
 
+  response.writeHead(200, { "Content-Type": "application/json" });
   if (/^([0-9\-]*)$/.test(ssnWithoutDashes)) {
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.write("success");
-    response.end();
+    response.end(JSON.stringify({ error: null }));
   } else {
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.write("error");
-    response.end();
+    response.end(
+      JSON.stringify({ error: `Contains characters besides - and [0-9].` })
+    );
   }
 });
 

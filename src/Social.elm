@@ -8,6 +8,7 @@ import Element.Events
 import Element.Font
 import Element.Input
 import Http
+import Json.Decode
 import Millis exposing (Millis(..), millis)
 import Time
 import Url.Builder
@@ -23,7 +24,7 @@ type alias Flags =
 type alias Model =
     { ssnInput : String
     , ssnFocus : FocusState
-    , serverResponse : Result.Result Http.Error ()
+    , serverResponse : Result.Result Http.Error (Maybe String)
     }
 
 
@@ -32,14 +33,14 @@ type Msg
     | ChangedSsnInput String
     | SsnFocusChanged FocusState
     | SubmitSsn
-    | GotSubmitResponse (Result.Result Http.Error ())
+    | GotSubmitResponse (Result.Result Http.Error (Maybe String))
 
 
 init : () -> ( Model, Cmd msg )
 init () =
     ( { ssnInput = ""
       , ssnFocus = OutOfFocus
-      , serverResponse = Ok ()
+      , serverResponse = Ok Nothing
       }
     , Cmd.none
     )
@@ -73,11 +74,14 @@ mainView model =
         ]
 
 
-serverResponseView : Result Http.Error () -> Element msg
+serverResponseView : Result Http.Error (Maybe String) -> Element msg
 serverResponseView errorHttpResult =
     case errorHttpResult of
-        Ok () ->
+        Ok Nothing ->
             Element.text "✅"
+
+        Ok (Just error) ->
+            Element.text error
 
         Err errorHttp ->
             Element.text (Debug.toString errorHttp)
@@ -161,10 +165,10 @@ sendSsnToServer : String -> Cmd Msg
 sendSsnToServer ssn =
     Http.get
         { url =
-            Url.Builder.crossOrigin "http://localhost:3000"
-                []
+            Url.Builder.relative
+                [ "api" ]
                 [ Url.Builder.string "ssn" ssn
                 ]
         , expect =
-            Http.expectWhatever GotSubmitResponse
+            Http.expectJson GotSubmitResponse (Json.Decode.field "error" (Json.Decode.maybe Json.Decode.string))
         }
