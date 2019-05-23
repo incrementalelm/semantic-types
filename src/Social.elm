@@ -81,7 +81,7 @@ serverResponseView errorHttpResult =
             Element.text "✅"
 
         Ok (Just error) ->
-            Element.text error
+            Element.text ("\u{1F6D1} " ++ error)
 
         Err errorHttp ->
             Element.text (Debug.toString errorHttp)
