@@ -131,4 +131,9 @@ update msg model =
                 _ =
                     Debug.log "Uploading ssn" model.ssnInput
             in
-            ( model, submitSsn model.ssnInput )
+            ( model, submitSsnWithStatus model.ssnInput )
+
+
+submitSsnWithStatus : String -> Cmd msg
+submitSsnWithStatus ssn =
+    submitSsn ssn
