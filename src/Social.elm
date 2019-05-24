@@ -1,7 +1,6 @@
 port module Social exposing (main)
 
 import Browser
-import Duration
 import Element exposing (Element)
 import Element.Border
 import Element.Events
@@ -147,7 +146,7 @@ update msg model =
             ( { model | ssnFocus = focusState }, Cmd.none )
 
         SubmitSsn ->
-            ( model, submitSsnWithStatus (maskSsn model.ssnInput) )
+            ( model, submitSsnWithStatus model.ssnInput )
 
         GotSubmitResponse response ->
             ( { model | serverResponse = response }, Cmd.none )
