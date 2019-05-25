@@ -27,8 +27,7 @@ type alias Model =
 
 
 type Msg
-    = NoOp
-    | ChangedSsnInput String
+    = ChangedSsnInput String
     | SsnFocusChanged FocusState
     | SubmitSsn
     | GotSubmitResponse (WebData (Maybe String))
@@ -141,9 +140,6 @@ subscriptions model =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none )
-
         ChangedSsnInput changedSsn ->
             ( { model | ssnInput = changedSsn }, Cmd.none )
 
