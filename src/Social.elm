@@ -9,7 +9,7 @@ import Element.Input
 import Http
 import Json.Decode
 import Millis exposing (Millis(..), millis)
-import RemoteData
+import RemoteData exposing (WebData)
 import Time
 import Url.Builder
 
@@ -24,7 +24,7 @@ type alias Flags =
 type alias Model =
     { ssnInput : String
     , ssnFocus : FocusState
-    , serverResponse : Result.Result Http.Error (Maybe String)
+    , serverResponse : WebData (Maybe String)
     }
 
 
@@ -33,14 +33,14 @@ type Msg
     | ChangedSsnInput String
     | SsnFocusChanged FocusState
     | SubmitSsn
-    | GotSubmitResponse (Result.Result Http.Error (Maybe String))
+    | GotSubmitResponse (WebData (Maybe String))
 
 
 init : () -> ( Model, Cmd msg )
 init () =
     ( { ssnInput = ""
       , ssnFocus = OutOfFocus
-      , serverResponse = Ok Nothing
+      , serverResponse = RemoteData.NotAsked
       }
     , Cmd.none
     )
@@ -74,17 +74,23 @@ mainView model =
         ]
 
 
-serverResponseView : Result Http.Error (Maybe String) -> Element msg
+serverResponseView : WebData (Maybe String) -> Element msg
 serverResponseView errorHttpResult =
     case errorHttpResult of
-        Ok Nothing ->
+        RemoteData.Success Nothing ->
             Element.text "✅"
 
-        Ok (Just error) ->
+        RemoteData.Success (Just error) ->
             Element.text ("\u{1F6D1} " ++ error)
 
-        Err errorHttp ->
+        RemoteData.Failure errorHttp ->
             Element.text (Debug.toString errorHttp)
+
+        RemoteData.NotAsked ->
+            Element.text ""
+
+        RemoteData.Loading ->
+            Element.text "..."
 
 
 ssnInput model =
@@ -170,5 +176,5 @@ sendSsnToServer ssn =
                 [ Url.Builder.string "ssn" ssn
                 ]
         , expect =
-            Http.expectJson GotSubmitResponse (Json.Decode.field "error" (Json.Decode.maybe Json.Decode.string))
+            Http.expectJson (\result -> result |> RemoteData.fromResult |> GotSubmitResponse) (Json.Decode.field "error" (Json.Decode.maybe Json.Decode.string))
         }
