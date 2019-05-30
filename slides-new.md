@@ -85,6 +85,14 @@ Use types to represent what the thing is.
 
 ![fit](./img/opaque-types-4.png)
 
+# -
+
+![inline original 100%](./img/opaque-types-4.png)
+
+- Opaque ✅
+- Blackbox
+- Invert responsibility
+
 # Continuing down the path
 
 1. Primitives
