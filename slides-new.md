@@ -62,7 +62,15 @@ Use types to represent what the thing is.
 
 # -
 
-![fit](./img/opaque-types.png)
+![fit](./img/opaque-types-1.png)
+
+# -
+
+![fit](./img/opaque-types-2.png)
+
+# -
+
+![fit](./img/opaque-types-3.png)
 
 # The path of evolving types
 
