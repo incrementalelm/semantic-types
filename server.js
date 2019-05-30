@@ -19,7 +19,7 @@ server.on("request", (request, response) => {
     }
   } else {
     response.writeHead(200, { "Content-Type": "application/json" });
-    response.end(JSON.stringify({ ssnInput: global.ssn }));
+    response.end(JSON.stringify(global.ssn));
   }
 });
 

@@ -26,16 +26,20 @@ type Msg
     = ChangedSsnInput String
     | SsnFocusChanged FocusState
     | SubmitSsn
+    | GotSavedSsn (Result Http.Error (Maybe String))
     | GotSubmitResponse (WebData (Maybe String))
 
 
-init : () -> ( Model, Cmd msg )
+init : () -> ( Model, Cmd Msg )
 init () =
     ( { ssnInput = ""
       , ssnFocus = OutOfFocus
       , serverResponse = RemoteData.NotAsked
       }
-    , Cmd.none
+    , Http.get
+        { url = Url.Builder.relative [ "api" ] []
+        , expect = Http.expectJson GotSavedSsn (Json.Decode.maybe Json.Decode.string)
+        }
     )
 
 
@@ -134,6 +138,18 @@ update msg model =
 
         GotSubmitResponse response ->
             ( { model | serverResponse = response }, Cmd.none )
+
+        GotSavedSsn savedSsnResult ->
+            case savedSsnResult of
+                Ok (Just savedSsn) ->
+                    let
+                        _ =
+                            Debug.log "loaded ssn" savedSsn
+                    in
+                    ( { model | ssnInput = savedSsn }, Cmd.none )
+
+                unexpected ->
+                    ( model, Cmd.none )
 
 
 submitSsnWithStatus : String -> Cmd Msg
