@@ -1,33 +1,38 @@
-## Why is this hard?
+build-lists: true
+slide-dividers: #
+
+# Using Semantic Types to Squash Bugs
+
+# Why is this hard?
 
 - Wrap early
 - Unwrap late
 - Hard to enforce when it's a String whether it's wrapped or not
 
-## Principle
+# Principle
 
 Use types to represent what the thing is.
 
 - Cheap to start with
 - Gives you a solid path to evolve and extract to a module
 
-## Can't we just fix it?
+# Can't we just fix it?
 
 - We could!
 - If I can eliminate a class of errors, I want to!
 
-## Goal
+# Goal
 
 - Change the type in a single place
 - Address all of the compiler errors
 - End up with the bug fixed
 
-## Problem
+# Problem
 
 - Okay, that made it easier to unwrap late
 - Can I make it impossible?
 
-## Opaque Types
+# Opaque Types
 
 - Just means "private constructor"
   - Move to module
@@ -41,7 +46,7 @@ module PositiveInt exposing (PositiveInt(..))
 type PositiveInt = PositiveInt Int
 ```
 
-## The path of evolving types
+# The path of evolving types
 
 - Primitives
 - Type with public constructor
