@@ -67,6 +67,10 @@ Use types to represent what the thing is.
 
 # -
 
+![fit](./img/opaque-types-0.png)
+
+# -
+
 ![fit](./img/opaque-types-1.png)
 
 # -
@@ -76,6 +80,10 @@ Use types to represent what the thing is.
 # -
 
 ![fit](./img/opaque-types-3.png)
+
+# -
+
+![fit](./img/opaque-types-4.png)
 
 # Continuing down the path
 
