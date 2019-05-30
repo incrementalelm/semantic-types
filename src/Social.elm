@@ -15,10 +15,6 @@ import Url.Builder
 port showSsnSubmitStatus : String -> Cmd msg
 
 
-type alias Flags =
-    ()
-
-
 type alias Model =
     { ssnInput : String
     , ssnFocus : FocusState
@@ -123,16 +119,6 @@ maskSsn ssn =
         |> String.replace "9" "X"
 
 
-main : Program Flags Model Msg
-main =
-    Browser.document
-        { init = init
-        , view = view
-        , update = update
-        , subscriptions = \_ -> Sub.none
-        }
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -173,4 +159,22 @@ sendSsnToServer ssn =
                         |> GotSubmitResponse
                 )
                 (Json.Decode.field "error" (Json.Decode.maybe Json.Decode.string))
+        }
+
+
+
+-- Elm Architecture setup
+
+
+type alias Flags =
+    ()
+
+
+main : Program Flags Model Msg
+main =
+    Browser.document
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = \_ -> Sub.none
         }
