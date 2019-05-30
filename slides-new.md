@@ -19,6 +19,8 @@ slide-dividers: #
 - Checklists
 
 ^ Tests only test what we remember to test
+Manually check wrap early...
+let's make it easier
 
 # Why is this hard?
 
