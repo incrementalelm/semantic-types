@@ -55,16 +55,14 @@ Use types to represent what the thing is.
 # Opaque Types
 
 - Just means "private constructor"
-  - Move to module
-  - Hide the constructor
-  - (But expose the type for annotations)
-  - Make functions for using it
+  1. Move to module
+  1. Hide the constructor
+  1. (But expose the type for annotations)
+  1. Make functions for using it
 
-```haskell
-module PositiveInt exposing (PositiveInt(..))
+# -
 
-type PositiveInt = PositiveInt Int
-```
+![fit](./img/opaque-types.png)
 
 # The path of evolving types
 
