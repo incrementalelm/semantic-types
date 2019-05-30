@@ -22,18 +22,19 @@ slide-dividers: #
 Manually check wrap early...
 let's make it easier
 
-# Why is this hard?
+# Rule of thumb
 
 - Wrap early
 - Unwrap late
-- Hard to enforce when it's a String whether it's wrapped or not
+- But it's a String whether it's wrapped or not
 
-# Principle
+# Tip
 
 Use types to represent what the thing is.
 
+- Semantic types!
 - Cheap to start with
-- Gives you a solid path to evolve and extract to a module
+- Good stepping stone
 
 # Can't we just fix it?
 
