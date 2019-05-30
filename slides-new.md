@@ -3,6 +3,23 @@ slide-dividers: #
 
 # Using Semantic Types to Squash Bugs
 
+# The app
+
+# The bug
+
+# The bug from fixing the bug
+
+- This isn't rocket science
+- Trial and error
+
+# Fix it, and keep it fixed
+
+- Tests
+- Code reviews
+- Checklists
+
+^ Tests only test what we remember to test
+
 # Why is this hard?
 
 - Wrap early
