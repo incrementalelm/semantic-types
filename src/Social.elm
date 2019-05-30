@@ -103,14 +103,14 @@ ssnInput model =
                     model.ssnInput
 
                 OutOfFocus ->
-                    model.ssnInput |> maskSsn
+                    model.ssnInput |> maskedSsn
         , placeholder = Nothing
         , label = Element.Input.labelAbove [] (Element.text "SSN")
         }
 
 
-maskSsn : String -> String
-maskSsn ssn =
+maskedSsn : String -> String
+maskedSsn ssn =
     ssn
         |> String.replace "0" "X"
         |> String.replace "1" "X"
