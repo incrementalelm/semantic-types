@@ -86,6 +86,7 @@ serverResponseView errorHttpResult =
             Element.text "..."
 
 
+ssnInput : Model -> Element Msg
 ssnInput model =
     Element.Input.text
         [ Element.Events.onFocus (SsnFocusChanged InFocus)
