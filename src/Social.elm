@@ -142,10 +142,6 @@ update msg model =
         GotSavedSsn savedSsnResult ->
             case savedSsnResult of
                 Ok (Just savedSsn) ->
-                    let
-                        _ =
-                            Debug.log "loaded ssn" savedSsn
-                    in
                     ( { model | ssnInput = savedSsn }, Cmd.none )
 
                 unexpected ->
