@@ -23,9 +23,9 @@ Use types to represent what the thing is.
 
 # Goal
 
-- Change the type in a single place
-- Address all of the compiler errors
-- End up with the bug fixed
+1. Change the type in a single place
+1. Address all of the compiler errors
+1. End up with the bug fixed
 
 # Problem
 
