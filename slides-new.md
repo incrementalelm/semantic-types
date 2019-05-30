@@ -47,6 +47,11 @@ Use types to represent what the thing is.
 1. Address all of the compiler errors
 1. End up with the bug fixed
 
+# Evolving our type
+
+1. Primitives
+1. Type with public constructor
+
 # Problem
 
 - Okay, that made it easier to unwrap late
@@ -72,11 +77,12 @@ Use types to represent what the thing is.
 
 ![fit](./img/opaque-types-3.png)
 
-# The path of evolving types
+# Continuing down the path
 
-- Primitives
-- Type with public constructor
-- Move to module
-- Accessors (get/set) instead of constructor
-  - i.e. things that give back the raw value
-- "One-stop-shop" (no accessors)
+1. Primitives
+1. Type with public constructor
+1. Move to module
+1. Use accessors instead of constructor
+1. "One-stop-shop" (no accessors)
+
+- Invert responsibility
