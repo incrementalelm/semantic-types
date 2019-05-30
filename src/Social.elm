@@ -12,9 +12,6 @@ import RemoteData exposing (WebData)
 import Url.Builder
 
 
-port showSsnSubmitStatus : String -> Cmd msg
-
-
 type alias Model =
     { ssnInput : String
     , ssnFocus : FocusState
@@ -28,6 +25,9 @@ type Msg
     | SubmitSsn
     | GotSavedSsn (Result Http.Error (Maybe String))
     | GotSubmitResponse (WebData (Maybe String))
+
+
+port showSsnSubmitStatus : String -> Cmd msg
 
 
 init : () -> ( Model, Cmd Msg )
