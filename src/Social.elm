@@ -129,12 +129,8 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = subscriptions
+        , subscriptions = \_ -> Sub.none
         }
-
-
-subscriptions model =
-    Sub.none
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -170,5 +166,11 @@ sendSsnToServer ssn =
                 [ Url.Builder.string "ssn" ssn
                 ]
         , expect =
-            Http.expectJson (\result -> result |> RemoteData.fromResult |> GotSubmitResponse) (Json.Decode.field "error" (Json.Decode.maybe Json.Decode.string))
+            Http.expectJson
+                (\result ->
+                    result
+                        |> RemoteData.fromResult
+                        |> GotSubmitResponse
+                )
+                (Json.Decode.field "error" (Json.Decode.maybe Json.Decode.string))
         }
