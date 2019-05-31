@@ -98,7 +98,16 @@ Use types to represent what the thing is.
 1. Primitives
 1. Type with public constructor
 1. Move to module
-1. Use accessors instead of constructor
-1. "One-stop-shop" (no accessors)
+1. Control the entrance (accessor, but no constructor)
+1. Control the exits (no accessors)
+1. "One-stop-shop"
 
 - Invert responsibility
+
+# Adapter
+
+- Decouple the arguments from things owned in Main
+  - Model
+  - Msg
+- Easier to iterate in the same file
+- "Make the change easy, then make the easy change." - Kent Beck
