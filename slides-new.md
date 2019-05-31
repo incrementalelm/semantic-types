@@ -149,3 +149,5 @@ Use types to represent what the thing is.
 - Too many responsibilities
 
 ^ Our constraint was security
+
+# Thank you!
