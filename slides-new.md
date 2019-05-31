@@ -5,6 +5,18 @@ slide-dividers: #
 
 # The app
 
+# Elm syntax
+
+# The Elm Architecture
+
+```elm
+type alias Model =
+    { ssnInput : String
+    , ssnFocus : FocusState
+    }
+
+```
+
 # The bug
 
 # The bug from fixing the bug
@@ -123,3 +135,17 @@ Use types to represent what the thing is.
   - Msg
 - Easier to iterate in the same file
 - "Make the change easy, then make the easy change." - Kent Beck
+
+# How it helps
+
+- Only one places to make sure its secure
+- Only one place if we add encryption/decryption
+
+# Cues
+
+- Enforce constraint
+- `ssnInput`, `maskedSsn`, `getSsn`, ...
+- Long import list
+- Too many responsibilities
+
+^ Our constraint was security
