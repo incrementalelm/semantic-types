@@ -57,6 +57,18 @@ Use types to represent what the thing is.
 - Okay, that made it easier to unwrap late
 - Can I make it impossible?
 
+# What are modules?
+
+1. Group types and functions
+1. Hide some of them
+
+- The groupings determine what can be hidden
+- Ways to organize
+- Construct (`Types.elm`, `Views.elm`)
+  - Have to expose everything
+  - Hard to navigate
+- Type & domain concept
+
 # Opaque Types
 
 - Just means "private constructor"
