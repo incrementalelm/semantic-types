@@ -45,6 +45,40 @@ let's make it easier
 
 # Fix it - for real this time!
 
+# "Wrapper Types" in Elm
+
+```haskell
+getProfile : String -> String -> Cmd msg
+getProfile userId authToken =
+  Http.get -- ...
+```
+
+-
+
+```haskell
+getProfile model.authToken model.userId
+```
+
+# "Wrapper Types" in Elm
+
+```haskell
+type UserId = UserId String
+type AuthToken = AuthToken String
+```
+
+-
+
+```haskell
+getProfile : UserId -> AuthToken -> Cmd msg
+getProfile (UserId userId) (AuthToken authToken) =
+  Http.get -- ...
+```
+
+```haskell
+-- Error! 🛑
+getProfile model.authToken model.userId
+```
+
 # Rule of thumb
 
 - Wrap early
