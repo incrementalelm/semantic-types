@@ -17,7 +17,7 @@ type alias Model =
 
 ```
 
-# The bug
+# Let's fix the bug!
 
 # The bug from fixing the bug
 
@@ -29,10 +29,21 @@ type alias Model =
 - Tests
 - Code reviews
 - Checklists
+- ... 🤔
+- Am I really confident it will stay fixed?
+- Let's try to eliminate a class of errors!
 
 ^ Tests only test what we remember to test
 Manually check wrap early...
 let's make it easier
+
+# Goal
+
+1. Change the type in a single place
+1. Address all of the compiler errors
+1. End up with the bug fixed
+
+# Fix it - for real this time!
 
 # Rule of thumb
 
@@ -47,17 +58,6 @@ Use types to represent what the thing is.
 - Semantic types!
 - Cheap to start with
 - Good stepping stone
-
-# Can't we just fix it?
-
-- We could!
-- If I can eliminate a class of errors, I want to!
-
-# Goal
-
-1. Change the type in a single place
-1. Address all of the compiler errors
-1. End up with the bug fixed
 
 # Evolving our type
 
