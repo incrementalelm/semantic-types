@@ -1,6 +1,6 @@
-import { Elm } from "./src/Social.elm";
+import { Elm } from "./src/Main.elm";
 
-let app = Elm.Social.init();
+let app = Elm.Main.init();
 app.ports.showSsnSubmitStatus.subscribe(ssn => {
   alert(`Submiting social: ${ssn}`);
 });

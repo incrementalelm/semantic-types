@@ -3,7 +3,7 @@ const Bundler = require("parcel-bundler");
 const express = require("express");
 const opn = require("opn");
 
-const bundler = new Bundler("./social.html", {
+const bundler = new Bundler("./index.html", {
   cache: false
 });
 
