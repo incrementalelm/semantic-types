@@ -6,6 +6,7 @@ import Element.Border
 import Element.Events
 import Element.Font
 import Element.Input
+import FocusState exposing (FocusState(..))
 import Http
 import Json.Decode
 import RemoteData exposing (WebData)
@@ -48,11 +49,6 @@ view model =
     { title = "Semantic Types Demo"
     , body = [ mainView model |> Element.layout [ Element.padding 30 ] ]
     }
-
-
-type FocusState
-    = InFocus
-    | OutOfFocus
 
 
 mainView : Model -> Element Msg
