@@ -60,8 +60,6 @@ let's make it easier
 
 1. Unwrap late
 
-# Fix it - for real this time!
-
 # "Wrapper Types" in Elm
 
 ```haskell
@@ -96,6 +94,8 @@ getProfile (UserId userId) (AuthToken authToken) =
 getProfile model.authToken model.userId
 ```
 
+# Fix it - for real this time!
+
 # Rule of thumb
 
 - Wrap early
@@ -109,6 +109,14 @@ Use types to represent what the thing is.
 - Semantic types!
 - Cheap to start with
 - Good stepping stone
+
+# Explicit Accessors ✅
+
+![original](img/unencapsulated-accessors.png)
+
+# Encapsulate Accessors
+
+![original](img/encapsulated-accessors.png)
 
 # Evolving our type
 
