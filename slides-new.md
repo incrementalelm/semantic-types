@@ -1,7 +1,9 @@
 build-lists: true
 slide-dividers: #
 
-# Using Semantic Types to Squash Bugs
+#
+
+![](./img/title.jpg)
 
 # The app
 
