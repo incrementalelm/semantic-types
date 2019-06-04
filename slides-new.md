@@ -39,9 +39,24 @@ let's make it easier
 
 # Goal
 
-1. Change the type in a single place
-1. Address all of the compiler errors
-1. End up with the bug fixed
+1. Change the type in a single place ✏️
+1. Address all of the compiler errors 🛑
+1. End up with the bug fixed 💸
+
+## Rules
+
+1. Compiler error-driven
+1. Only wrap or unwrap at terminals
+
+# Rules
+
+- Only wrap or unwrap at terminals!
+- Wrap early
+  - Right after it enters
+- Unwrap late
+  - Arguments to functions you control are not terminals
+
+1. Unwrap late
 
 # Fix it - for real this time!
 
