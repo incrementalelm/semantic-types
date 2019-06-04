@@ -13,42 +13,7 @@ import RemoteData exposing (WebData)
 import Url.Builder
 
 
-type alias Model =
-    { ssnInput : String
-    , ssnFocus : FocusState
-    , serverResponse : WebData (Maybe String)
-    }
-
-
-type Msg
-    = ChangedSsnInput String
-    | SsnFocusChanged FocusState
-    | SubmitSsn
-    | GotSavedSsn (Result Http.Error (Maybe String))
-    | GotSubmitResponse (WebData (Maybe String))
-
-
 port showSsnSubmitStatus : String -> Cmd msg
-
-
-init : () -> ( Model, Cmd Msg )
-init () =
-    ( { ssnInput = ""
-      , ssnFocus = OutOfFocus
-      , serverResponse = RemoteData.NotAsked
-      }
-    , Http.get
-        { url = Url.Builder.relative [ "api" ] []
-        , expect = Http.expectJson GotSavedSsn (Json.Decode.maybe Json.Decode.string)
-        }
-    )
-
-
-view : Model -> Browser.Document Msg
-view model =
-    { title = "Semantic Types Demo"
-    , body = [ mainView model |> Element.layout [ Element.padding 30 ] ]
-    }
 
 
 mainView : Model -> Element Msg
@@ -120,30 +85,6 @@ maskedSsn ssn =
         |> String.replace "9" "X"
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        ChangedSsnInput changedSsn ->
-            ( { model | ssnInput = changedSsn }, Cmd.none )
-
-        SsnFocusChanged focusState ->
-            ( { model | ssnFocus = focusState }, Cmd.none )
-
-        SubmitSsn ->
-            ( model, submitSsnWithStatus model.ssnInput )
-
-        GotSubmitResponse response ->
-            ( { model | serverResponse = response }, Cmd.none )
-
-        GotSavedSsn savedSsnResult ->
-            case savedSsnResult of
-                Ok (Just savedSsn) ->
-                    ( { model | ssnInput = savedSsn }, Cmd.none )
-
-                unexpected ->
-                    ( model, Cmd.none )
-
-
 submitSsnWithStatus : String -> Cmd Msg
 submitSsnWithStatus ssn =
     Cmd.batch
@@ -172,11 +113,74 @@ sendSsnToServer ssn =
 
 
 
--- Elm Architecture setup
+-- Elm Architecture logic
+
+
+type alias Model =
+    { ssnInput : String
+    , ssnFocus : FocusState
+    , serverResponse : WebData (Maybe String)
+    }
+
+
+type Msg
+    = ChangedSsnInput String
+    | SsnFocusChanged FocusState
+    | SubmitSsn
+    | GotSavedSsn (Result Http.Error (Maybe String))
+    | GotSubmitResponse (WebData (Maybe String))
+
+
+init : () -> ( Model, Cmd Msg )
+init () =
+    ( { ssnInput = ""
+      , ssnFocus = OutOfFocus
+      , serverResponse = RemoteData.NotAsked
+      }
+    , Http.get
+        { url = Url.Builder.relative [ "api" ] []
+        , expect = Http.expectJson GotSavedSsn (Json.Decode.maybe Json.Decode.string)
+        }
+    )
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        ChangedSsnInput changedSsn ->
+            ( { model | ssnInput = changedSsn }, Cmd.none )
+
+        SsnFocusChanged focusState ->
+            ( { model | ssnFocus = focusState }, Cmd.none )
+
+        SubmitSsn ->
+            ( model, submitSsnWithStatus model.ssnInput )
+
+        GotSubmitResponse response ->
+            ( { model | serverResponse = response }, Cmd.none )
+
+        GotSavedSsn savedSsnResult ->
+            case savedSsnResult of
+                Ok (Just savedSsn) ->
+                    ( { model | ssnInput = savedSsn }, Cmd.none )
+
+                unexpected ->
+                    ( model, Cmd.none )
+
+
+
+-- Elm Architecture wiring
 
 
 type alias Flags =
     ()
+
+
+view : Model -> Browser.Document Msg
+view model =
+    { title = "Semantic Types Demo"
+    , body = [ mainView model |> Element.layout [ Element.padding 30 ] ]
+    }
 
 
 main : Program Flags Model Msg
